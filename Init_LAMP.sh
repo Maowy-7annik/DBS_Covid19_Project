@@ -10,6 +10,8 @@ apt-get install -y $LAMP || true
 #webserver config
 echo "\033[0;32m\nConfiguring webserver \033[0m\n"
 ufw allow https
+#add LISTEN 'portnumber' to etc/apache2/ports.conf
+#or configure https with certificates etc.
 sed -i '2s/.*/DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm/' /etc/apache2/mods-enabled/dir.conf
 
 
@@ -25,10 +27,11 @@ if { [ ! -f covid19.csv ] || [ $(( $(date +%s) - $(stat covid19.csv -c %Y) )) -g
 fi
 
 
-#database import
+#database configuration
 echo "\033[0;32m\nInitalising database \033[0m\n"
 service mysql start
 mysql --user=root << EOF
+CREATE USER IF NOT EXISTS webservice IDENTIFIED BY 'password';
 CREATE DATABASE IF NOT EXISTS dbs_project;
 USE dbs_project;
 CREATE TABLE IF NOT EXISTS covid19(
@@ -49,4 +52,5 @@ CREATE TABLE IF NOT EXISTS covid19(
 LOAD DATA LOCAL INFILE 'covid19.csv' INTO TABLE covid19 
     FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES 
     (@date_conv_var, day, month, year, cases, deaths, country, @discard, countryCode, population, continent, @discard) SET date = STR_TO_DATE(@date_conv_var, '%d/%m/%Y');
+GRANT SELECT ON dbs_project.covid19 TO webservice;
 EOF
