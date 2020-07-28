@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta content="utf-8" http-equiv="encoding">
+        <title>DBS Project</title>
+    </head>
+    <body>
+        <h1>Covid 19 Data</h1>
+        <button type="button" onclick="queryDatabase('SELECT * FROM covid19 WHERE country=\'Germany\' ORDER BY date DESC;')">
+            Get number of new cases for today: 
+        </button>
+        <div id="response">
+            
+        </div>
+    </body>
+    <script>
+
+        function queryDatabase(sql_string) {
+            var MySQL_connection = new XMLHttpRequest();
+            MySQL_connection.onreadystatechange = function() {
+                document.getElementById("response").innerHTML = this.responseText;
+            }
+            
+            MySQL_connection.open("GET", "db_connection.php?query=" + sql_string)
+            MySQL_connection.send();
+        }
+    </script>
+</html>
