@@ -12,7 +12,6 @@ echo "\033[0;32m\nConfiguring webserver \033[0m\n"
 ufw allow https
 #add LISTEN 'portnumber' to etc/apache2/ports.conf
 #or configure https with certificates etc.
-sed -i '2s/.*/DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm/' /etc/apache2/mods-enabled/dir.conf
 
 
 #website setup
