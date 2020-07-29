@@ -1,11 +1,13 @@
 #!/bin/sh
-LAMP="apache2 mysql-server php libapache2-mod-php php-mysql"
+LAMP="apache2 mysql-server php libapache2-mod-php php-mysql unzip"
 
 #setup
 echo "\033[0;32m\nInstall LAMP-Stack \033[0m\n"
 apt-get update
 apt-get install -y $LAMP || true
 
+wget --no-hsts -O canvas.js.zip https://canvasjs.com/fdm/chart/
+unzip canvas.js.zip -d website
 
 #webserver config
 echo "\033[0;32m\nConfiguring webserver \033[0m\n"
