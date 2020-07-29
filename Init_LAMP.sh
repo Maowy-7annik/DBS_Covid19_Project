@@ -7,7 +7,9 @@ apt-get update
 apt-get install -y $LAMP || true
 
 wget --no-hsts -O canvas.js.zip https://canvasjs.com/fdm/chart/
-unzip canvas.js.zip -d website
+unzip canvas.js.zip
+cp 'canvasjs-2.3.2/Chart 2.3.2 GA - Stable/canvasjs.min.js' website/javascript/
+rm -r canvas.js.zip canvasjs-2.3.2
 
 #webserver config
 echo "\033[0;32m\nConfiguring webserver \033[0m\n"
