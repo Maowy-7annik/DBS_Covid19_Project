@@ -1,19 +1,70 @@
 <!DOCTYPE HTML>
-<html>
-    <head>
-        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-        <meta content="utf-8" http-equiv="encoding">
-        <title>DBS Project</title>
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-    </head>
-    <body>
-        <h1>Covid 19 Data</h1>
-        <button type="button" onclick="test()">
-            Display Graph: 
-        </button>
-        <div id="chartContainer" style="height: 500px; width: 800px;"></div>
 
+<!-- language used for the websites content -->
+<html lang="en">
+
+    <!-- metadata for browsers, search engines, bots, etc -->
+    <head>
+        <meta name="encoding" charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+
+        <meta name="robots" content="index">
+        <meta name="keywords" content="covid-19">
+
+        <meta name="author" content="Jannik Hein">
+        <meta name="copyright" content="">
+        <meta name="description" content="Covid-19 data visualization webservice. Project of summer semester 2020 course: 'Database Systems' at FU-Berlin">
+
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script type="text/javascript" src="javascript/canvasjs.min.js"></script>
+        <script type="text/javascript" src="javascript/graphs.js"></script>
+
+        <title>DBS Project</title>
+    </head>
+
+    <!-- BODY -->
+    <body onload="display('Germany'); initalization();" onload="">
+
+        <!-- HEADER -->
+        <header>
+            <div id="logo_container">
+                <h1>Data Visualization Project</h1>
+                <img src="images/fu_logo_sw.png" alt="Freie Universität Berlin Logo">
+            </div>
+            <div id="colored_bar"></div>
+        </header>
+        <nav id="navigation_container">
+            <ul>
+                <li id="first">
+                    <a href="index.html">Country</a>
+                </li>
+                <li id="second">
+                    <a href="index.html">Continent</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- MAIN -->
+        <main>
+            <div class="narrow_content card">
+                <h2>
+                    Daily Cases
+                </h2>
+                <p>
+                    The data should illustrade the speed of the virus spreading over the full duration of the pandemic for a given country.
+                </p>
+            </div>
+            <div class="wide_content card ">
+                <div id="chartContainer"></div>
+                <select id="countrySelector">
+
+                </select>
+            </div>
+        </main>
+
+        <!-- FOOTER -->
+        <footer>
+
+        </footer>
     </body>
-    <script type="text/javascript" src="javascript/canvasjs.min.js"></script>
-    <script type="text/javascript" src="javascript/graphs.js"></script>
 </html>
