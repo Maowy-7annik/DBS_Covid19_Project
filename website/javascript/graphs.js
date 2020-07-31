@@ -1,6 +1,9 @@
 let graphOptions = {
     title: {
-
+        fontFamily: "Nexus, Geneva, sans-serif",
+        fontSize: 18,
+        fontWeight: "lighter",
+        margin: 8
     },
     subtitles: [{
 
@@ -10,7 +13,7 @@ let graphOptions = {
         fontColor: "#000000",
         titleFontSize: 16,
         labelFontSize: 14,
-        fontFamily: "Verdana, Geneva, sans-serif",
+        fontFamily: "Nexus, Geneva, sans-serif",
         interval: 1,
         intervalType: "month",
         valueFormatString: "MMM",
@@ -22,9 +25,10 @@ let graphOptions = {
         fontColor: "#000000",
         titleFontSize: 16,
         labelFontSize: 14,
-        fontFamily: "Verdana, Geneva, sans-serif",
+        fontFamily: "Nexus, Geneva, sans-serif",
         includeZero: true,
         minimum: -15,
+        viewportMinimum: 0,
         valueFormatString: "#######",
         lineThickness: 0.1,
         gridThickness: 0.1
@@ -67,13 +71,32 @@ function queryDatabase(sql) {
     return dbConnection;
 }
 
-function test() {
-    const answer = queryDatabase("SELECT date, cases FROM covid19 WHERE country='Germany' ORDER BY date DESC;");
+function display(country) {
+    const answer = queryDatabase(`SELECT date, cases FROM covid19 WHERE country='${country}' ORDER BY date DESC;`);
 
     answer.onreadystatechange = function () {
         graphOptions.data[0].dataPoints = toArray(this.responseText);
         graphOptions.data[0].name = "cases";
+        graphOptions.title.text = country;
         graphContainerId = "chartContainer";
-        new CanvasJS.Chart(graphContainerId, graphOptions).render()
+        new CanvasJS.Chart(graphContainerId, graphOptions).render();
+    }
+}
+
+function initalization() {
+    const selectCountry = document.getElementById("countrySelector");
+    selectCountry.addEventListener('change', function () {
+        const select = document.getElementById("countrySelector");
+        display(select.options[select.selectedIndex].value);
+    });
+
+    const answer = queryDatabase(`SELECT DISTINCT country FROM covid19`)
+    answer.onreadystatechange = function () {
+        const countries = this.responseText.split("\n").forEach(element => {
+            let option = document.createElement('option');
+            option.text = element;
+            option.value = element;
+            selectCountry.appendChild(option);
+        });
     }
 }
