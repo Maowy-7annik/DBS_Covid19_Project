@@ -33,6 +33,7 @@ header {
 
 #logo_container h1{
     overflow: hidden;
+    margin-left: 1vw;
     padding: 1vh 1vw;
 
     font-size: 2.5vh;
@@ -77,6 +78,7 @@ header {
     list-style: none;
     display: inline-block;
     padding: 0;
+    margin-left: 1vw;
 
     height: 100%;
     width: auto;
@@ -87,7 +89,7 @@ header {
     box-sizing: border-box;
     overflow: hidden;
 
-    padding: 0.8vh 1vw;
+    padding: 0.8vh 1.1vw;
 
     height: 100%;
     width: 100%;
@@ -101,22 +103,23 @@ header {
 }
 
 #navigation_container a:hover {
-    background: #40688f;
-    border-bottom: 2px solid #99CC00;
+    background: #FFFBEB;
+    color: #000000;
+    border-bottom: 2px solid #FFDA33;
 }
 
 
 main {
     display: grid;
     grid-template-columns: 33.3% 33.3% 33.3%;
-    grid-template-rows: 100vh;
+    grid-template-rows: 35vh 35vh;
 
     padding: 0 10%;
 
     height: 150%;
     width: 80%;
 
-    background: #dddddd;
+    background: #ffffff;
 }
 
 .card {
@@ -126,47 +129,51 @@ main {
 
     margin: 2vh 1vw;
     
-    height: 30%;
+    height: auto;
     width: auto;
     
     background: #ffffff;
     box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.15);
+    border-bottom: 3px solid #FFDA33;
 }
 
 .narrow_content {
     grid-column: 1 / 2;
+    padding: 2vh 3vw;
+    background: #FFFBEB;
 }
 
 .narrow_content h2 {
-    margin: 2.5vh 2vw;
-    max-width: 80%;
+    max-width: 100%;
     max-height: 40%;
 
     font-size: 2.5vh;
+    color: #000000;
 }
 
 .narrow_content p {
-    margin: 3vh 2vw;
-    max-width: 80%;
+    max-width: 100%;
     max-height: 60%;
 
     font-size: 1.65vh;
+    color: #000000;
 }
 
 .wide_content {
     grid-column: 2 / span 3;
+    padding: 2vh 2vw;
 }
 
 #chartContainer {
-    margin: 1vh 2vw 3vh 2vw;
-    height: 80%;
+    height: 95%;
     width: auto;
 }
 
 #countrySelector {
-    box-sizing: border-box;
+    margin-left: 40%;
+    margin-top: 1vh;
     height: auto;
-    width: 100%;
+    width: 60%;
     border: 0 solid transparent;
     border-color: #ffffff;
 }
