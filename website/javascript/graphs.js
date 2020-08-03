@@ -20,7 +20,7 @@ let graphOptions = {
         lineThickness: 0.1,
         gridThickness: 0.1,
         stripLines: [{
-            color: "#003366",
+            color: "#3B1C35",
             opacity: 0.2,
             showOnTop: true
         }]
@@ -47,6 +47,9 @@ let graphOptions = {
             for(let i = 0; i < e.entries.length; i++) {
                 let entry = e.entries[i];
                 toolTip += entry.dataPoint.x.toDateString().slice(3,10)+ ": " + entry.dataPoint.y;
+                let difference = entry.dataPoint.y - entry.dataPoint.z;
+                toolTip += difference >= 0 ? "<b style=\"color:red\"> +" : "<b style=\"color:green\"> ";
+                toolTip += difference + "</b>";
             }
             return toolTip;
         }
@@ -88,7 +91,12 @@ function display(country) {
 
     answer.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            graph.options.data[0].dataPoints = to2DArray(this.responseText);
+            data = to2DArray(this.responseText);
+            data[0].z = 0;
+            for (let i = 0, j = 1; j < data.length; i++, j++) {
+                data[j].z = data[i].y;
+            }
+            graph.options.data[0].dataPoints = data;
             graph.options.data[0].name = "cases";
             graph.render();
         }
