@@ -61,9 +61,9 @@ CREATE TABLE IF NOT EXISTS covid19(
     PRIMARY KEY(date, countryCode)
 ) ENGINE=Memory;
 
-CREATE TABLE IF NOT EXISTS covid_restrictions(
-    country VARCHAR(32) NOT NULL;
-    date DATE NOT NULL;
+CREATE TABLE IF NOT EXISTS covid19_restrictions(
+    country VARCHAR(32) NOT NULL,
+    date DATE NOT NULL,
     schoolsClosed BOOLEAN,
     noPublicEvents BOOLEAN,
     noGatherings BOOLEAN,
@@ -76,9 +76,9 @@ LOAD DATA LOCAL INFILE 'covid19.csv' INTO TABLE covid19
     (@date_conv_var, day, month, year, cases, deaths, country, @discard, countryCode, population, continent, @discard)
     SET date = STR_TO_DATE(@date_conv_var, '%d/%m/%Y');
 
-LOAD DATA LOCAL INFILE 'covid19_gov_restrictions.csv' INTO TABLE covid19 
+LOAD DATA LOCAL INFILE 'covid19_gov_restrictions.csv' INTO TABLE covid19_restrictions
     FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES
-    (country, @discard, @date_conv_var, @school, @discard, @discard, @discard, @event, @discard, @gathering, @discard, @discard, @discard, @lockdown, @discard, @discard, @discard, @discard, @discard, @discard, @discard, @discard, @discard, @discard, @discard, @testing, @discard, @discard, @discard, @discard, @discard, @discard, @discard, @discard, @discard, @discard, @discard, @discard, @discard, @discard, @discard, @discard)
+    (country, @discard, @discard, @discrad, @date_conv_var, @school, @discard, @discard, @discard, @event, @discard, @gathering, @discard, @discard, @discard, @lockdown, @discard, @discard, @discard, @discard, @discard, @discard, @discard, @discard, @discard, @discard, @discard, @testing, @discard, @discard, @discard, @discard, @discard, @discard, @discard, @discard, @discard, @discard, @discard, @discard, @discard, @discard, @discard, @discard)
     SET date= STR_TO_DATE(@date_conv_var, '%Y%m%d'),
     schoolsClosed= CASE WHEN @school > 1 THEN TRUE ELSE FALSE END,
     noPublicEvents= CASE WHEN @event = 2 THEN TRUE ELSE FALSE END,
@@ -89,12 +89,12 @@ LOAD DATA LOCAL INFILE 'covid19_gov_restrictions.csv' INTO TABLE covid19
                         WHEN @testing = 3 THEN  'everyone' END;
 
 UPDATE covid19
-INNER JOIN covid_restrictions ON covid19.date = covid_restrictions.date AND covid19.country = covid_restrictions.country
-SET covid19.schoolsClosed = covid_restrictions.schoolsClosed,
-    covid19.noPublicEvents = covid_restrictions.noPublicEvents,
-    covid19.noGatherings = covid_restrictions.noGatherings,
-    covid19.lockdown = covid_restrictions.lockdown,
-    covid19.testingPolicy = covid_restrictions.testingPolicy;
+INNER JOIN covid19_restrictions ON covid19.date = covid19_restrictions.date AND covid19.country = covid19_restrictions.country
+SET covid19.schoolsClosed = covid19_restrictions.schoolsClosed,
+    covid19.noPublicEvents = covid19_restrictions.noPublicEvents,
+    covid19.noGatherings = covid19_restrictions.noGatherings,
+    covid19.lockdown = covid19_restrictions.lockdown,
+    covid19.testingPolicy = covid19_restrictions.testingPolicy;
 
 GRANT SELECT ON dbs_project.covid19 TO webservice;
 EOF
